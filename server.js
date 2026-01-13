@@ -38,6 +38,9 @@ const upload = multer({
     }
 });
 
+// Enable trust proxy for Railway/Heroku
+app.set('trust proxy', 1);
+
 // Middleware
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
@@ -231,7 +234,8 @@ app.post('/reserve/:id', async (req, res) => {
             message || ''
         );
 
-        // Send email notification (if configured)
+        // Send email notification (DISABLED as requested)
+        /*
         try {
             const { sendReservationNotification } = require('./services/email');
             await sendReservationNotification({
@@ -246,6 +250,7 @@ app.post('/reserve/:id', async (req, res) => {
         } catch (emailError) {
             console.log('Email notification failed:', emailError.message);
         }
+        */
 
         req.flash('success', 'Reservation submitted successfully! Please proceed to payment.');
         res.redirect(`/confirmation/${result.lastInsertRowid}`);

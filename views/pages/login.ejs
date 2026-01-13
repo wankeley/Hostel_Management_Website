@@ -36,8 +36,16 @@
 
                                             <div class="form-group">
                                                 <label class="form-label">Password</label>
-                                                <input type="password" name="password" class="form-control" required
-                                                    placeholder="Enter your password">
+                                                <div style="position: relative;">
+                                                    <input type="password" name="password" id="loginPassword"
+                                                        class="form-control" required placeholder="Enter your password"
+                                                        style="padding-right: 50px;">
+                                                    <button type="button" onclick="togglePassword()"
+                                                        style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--gray-500); padding: 5px;">
+                                                        <i data-lucide="eye" id="eyeIcon"
+                                                            style="width: 20px; height: 20px;"></i>
+                                                    </button>
+                                                </div>
                                             </div>
 
                                             <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
@@ -50,3 +58,18 @@
                                         </div>
     </div>
 </div>
+
+<script>
+    function togglePassword() {
+        const input = document.getElementById('loginPassword');
+        const icon = document.getElementById('eyeIcon');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.setAttribute('data-lucide', 'eye-off');
+        } else {
+            input.type = 'password';
+            icon.setAttribute('data-lucide', 'eye');
+        }
+        lucide.createIcons();
+    }
+</script>

@@ -37,15 +37,29 @@
 
                             <div class="form-group">
                                 <label class="form-label">Password</label>
-                                <input type="password" name="password" class="form-control" required
-                                    placeholder="Create a password" minlength="6">
+                                <div style="position: relative;">
+                                    <input type="password" name="password" id="regPassword" class="form-control"
+                                        required placeholder="Create a password" minlength="6"
+                                        style="padding-right: 50px;">
+                                    <button type="button" onclick="togglePassword('regPassword', 'eyeIcon1')"
+                                        style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--gray-500); padding: 5px;">
+                                        <i data-lucide="eye" id="eyeIcon1" style="width: 20px; height: 20px;"></i>
+                                    </button>
+                                </div>
                                 <p class="form-hint">At least 6 characters</p>
                             </div>
 
                             <div class="form-group">
                                 <label class="form-label">Confirm Password</label>
-                                <input type="password" name="confirm_password" class="form-control" required
-                                    placeholder="Confirm your password">
+                                <div style="position: relative;">
+                                    <input type="password" name="confirm_password" id="regConfirmPassword"
+                                        class="form-control" required placeholder="Confirm your password"
+                                        style="padding-right: 50px;">
+                                    <button type="button" onclick="togglePassword('regConfirmPassword', 'eyeIcon2')"
+                                        style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--gray-500); padding: 5px;">
+                                        <i data-lucide="eye" id="eyeIcon2" style="width: 20px; height: 20px;"></i>
+                                    </button>
+                                </div>
                             </div>
 
                             <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
@@ -58,3 +72,18 @@
                         </div>
     </div>
 </div>
+
+<script>
+    function togglePassword(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.setAttribute('data-lucide', 'eye-off');
+        } else {
+            input.type = 'password';
+            icon.setAttribute('data-lucide', 'eye');
+        }
+        lucide.createIcons();
+    }
+</script>
