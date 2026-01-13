@@ -676,9 +676,9 @@ app.get('/admin/users', isAdmin, (req, res) => {
     const users = db.prepare(`
         SELECT u.*, 
             (SELECT COUNT(*) FROM reservations WHERE user_id = u.id OR guest_email = u.email) as reservation_count
-        FROM users 
-        WHERE role = 'user'
-        ORDER BY created_at DESC
+        FROM users u
+        WHERE u.role = 'user'
+        ORDER BY u.created_at DESC
     `).all();
 
     res.render('admin/users', {
@@ -753,7 +753,7 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).render('pages/error', {
         title: 'Error',
-        error: process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong'
+        error: [process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong']
     });
 });
 
