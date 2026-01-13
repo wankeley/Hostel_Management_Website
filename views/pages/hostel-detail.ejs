@@ -1,0 +1,215 @@
+<div class="hostel-detail">
+    <div class="container" style="padding-top: 2rem; padding-bottom: 4rem;">
+        <!-- Breadcrumb -->
+        <div style="margin-bottom: 1.5rem;">
+            <a href="/hostels" style="color: var(--gray-500); display: inline-flex; align-items: center; gap: 0.5rem;">
+                <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i>
+                Back to Hostels
+            </a>
+        </div>
+
+        <!-- Gallery -->
+        <div class="hostel-gallery">
+            <div class="hostel-gallery-main">
+                <% if (hostel.images.length> 0) { %>
+                    <img src="<%= hostel.images[0] %>" alt="<%= hostel.name %>" class="gallery-image"
+                        style="cursor: zoom-in;">
+                    <% } else { %>
+                        <div class="card-placeholder" style="height: 100%;">🏨</div>
+                        <% } %>
+            </div>
+
+            <div class="hostel-gallery-thumbs">
+                <% if (hostel.images.length> 1) { %>
+                    <div class="hostel-gallery-thumb">
+                        <img src="<%= hostel.images[1] %>" alt="<%= hostel.name %>" class="gallery-image"
+                            style="cursor: zoom-in;">
+                    </div>
+                    <% } else { %>
+                        <div class="hostel-gallery-thumb" style="background: var(--gray-100);"></div>
+                        <% } %>
+
+                            <% if (hostel.images.length> 2) { %>
+                                <div class="hostel-gallery-thumb">
+                                    <img src="<%= hostel.images[2] %>" alt="<%= hostel.name %>" class="gallery-image"
+                                        style="cursor: zoom-in;">
+                                </div>
+                                <% } else { %>
+                                    <div class="hostel-gallery-thumb" style="background: var(--gray-100);"></div>
+                                    <% } %>
+            </div>
+        </div>
+
+        <!-- Show more images if available -->
+        <% if (hostel.images.length> 3) { %>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem;">
+                <% hostel.images.slice(3).forEach(function(img, i) { %>
+                    <div style="width: 100px; height: 80px; border-radius: var(--radius); overflow: hidden;">
+                        <img src="<%= img %>" alt="Image <%= i + 4 %>"
+                            style="width: 100%; height: 100%; object-fit: cover; cursor: zoom-in;"
+                            class="gallery-image">
+                    </div>
+                    <% }); %>
+            </div>
+            <% } %>
+
+                <!-- Videos -->
+                <% if (hostel.videos && hostel.videos.length> 0) { %>
+                    <div style="margin-bottom: 2rem;">
+                        <h3 style="margin-bottom: 1rem;">Videos</h3>
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <% hostel.videos.forEach(function(video) { %>
+                                <video controls style="max-width: 400px; border-radius: var(--radius);">
+                                    <source src="<%= video %>" type="video/mp4">
+                                    Your browser does not support video.
+                                </video>
+                                <% }); %>
+                        </div>
+                    </div>
+                    <% } %>
+
+                        <!-- Content -->
+                        <div class="hostel-content">
+                            <div class="hostel-info">
+                                <h1>
+                                    <%= hostel.name %>
+                                </h1>
+
+                                <div class="hostel-location">
+                                    <i data-lucide="map-pin" style="width: 18px; height: 18px;"></i>
+                                    <%= hostel.location %>
+                                        <% if (hostel.address) { %>
+                                            - <%= hostel.address %>
+                                                <% } %>
+                                </div>
+
+                                <p class="hostel-description">
+                                    <%= hostel.description %>
+                                </p>
+
+                                <% if (hostel.amenities.length> 0) { %>
+                                    <h3 style="margin-bottom: 1rem;">Amenities</h3>
+                                    <div class="hostel-amenities-list">
+                                        <% hostel.amenities.forEach(function(amenity) { %>
+                                            <div class="hostel-amenity">
+                                                <i data-lucide="check-circle" class="hostel-amenity-icon"
+                                                    style="width: 18px; height: 18px;"></i>
+                                                <%= amenity %>
+                                            </div>
+                                            <% }); %>
+                                    </div>
+                                    <% } %>
+
+                                        <div style="margin-top: 2rem;">
+                                            <h3 style="margin-bottom: 1rem;">Details</h3>
+                                            <div
+                                                style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                                                <div
+                                                    style="padding: 1rem; background: var(--gray-50); border-radius: var(--radius);">
+                                                    <div style="color: var(--gray-500); font-size: 0.875rem;">Available
+                                                        Rooms</div>
+                                                    <div style="font-size: 1.25rem; font-weight: 600;">
+                                                        <%= hostel.rooms %> rooms
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    style="padding: 1rem; background: var(--gray-50); border-radius: var(--radius);">
+                                                    <div style="color: var(--gray-500); font-size: 0.875rem;">Price per
+                                                        Night</div>
+                                                    <div
+                                                        style="font-size: 1.25rem; font-weight: 600; color: var(--primary-600);">
+                                                        GH₵<%= hostel.price.toFixed(2) %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+
+                            <!-- Booking Card -->
+                            <div>
+                                <div class="booking-card">
+                                    <div class="booking-price">
+                                        GH₵<%= hostel.price.toFixed(2) %>
+                                            <span>/night</span>
+                                    </div>
+
+                                    <div class="booking-status <%= hostel.status %>">
+                                        <% if (hostel.status==='available' ) { %>
+                                            <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
+                                            Available for Booking
+                                            <% } else { %>
+                                                <i data-lucide="x-circle" style="width: 18px; height: 18px;"></i>
+                                                Currently Booked
+                                                <% } %>
+                                    </div>
+
+                                    <% if (hostel.status==='available' ) { %>
+                                        <a href="/reserve/<%= hostel.id %>" class="btn btn-primary btn-lg"
+                                            style="width: 100%;">
+                                            <i data-lucide="calendar-check"></i>
+                                            Reserve Now
+                                        </a>
+                                        <% } else { %>
+                                            <button class="btn btn-secondary btn-lg" style="width: 100%;" disabled>
+                                                Not Available
+                                            </button>
+                                            <% } %>
+
+                                                <div
+                                                    style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--gray-200);">
+                                                    <a href="/payment-info"
+                                                        style="display: flex; align-items: center; gap: 0.5rem; color: var(--gray-600); font-size: 0.9375rem;">
+                                                        <i data-lucide="credit-card"
+                                                            style="width: 18px; height: 18px;"></i>
+                                                        View Payment Options
+                                                    </a>
+                                                </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Similar Hostels -->
+                        <% if (similarHostels && similarHostels.length> 0) { %>
+                            <div style="margin-top: 4rem;">
+                                <h2 style="margin-bottom: 1.5rem;">Similar Hostels</h2>
+                                <div class="hostel-grid">
+                                    <% similarHostels.forEach(function(h) { %>
+                                        <div class="card">
+                                            <div class="card-image">
+                                                <% let imgs=[]; try { imgs=JSON.parse(h.images || '[]' ); } catch(e) {}
+                                                    %>
+                                                    <% if (imgs.length> 0) { %>
+                                                        <img src="<%= imgs[0] %>" alt="<%= h.name %>">
+                                                        <% } else { %>
+                                                            <div class="card-placeholder">🏨</div>
+                                                            <% } %>
+                                                                <span class="card-badge <%= h.status %>">
+                                                                    <%= h.status %>
+                                                                </span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="card-location">
+                                                    <i data-lucide="map-pin" style="width: 14px; height: 14px;"></i>
+                                                    <%= h.location %>
+                                                </div>
+                                                <h3 class="card-title">
+                                                    <a href="/hostel/<%= h.id %>">
+                                                        <%= h.name %>
+                                                    </a>
+                                                </h3>
+                                                <div class="card-footer">
+                                                    <div class="card-price">
+                                                        GH₵<%= h.price.toFixed(2) %>
+                                                            <span>/night</span>
+                                                    </div>
+                                                    <a href="/hostel/<%= h.id %>"
+                                                        class="btn btn-primary btn-sm">View</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% }); %>
+                                </div>
+                            </div>
+                            <% } %>
+    </div>
+</div>

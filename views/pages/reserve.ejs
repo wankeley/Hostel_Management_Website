@@ -1,0 +1,142 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="container">
+        <h1>Make a Reservation</h1>
+        <p>Book your stay at <%= hostel.name %>
+        </p>
+    </div>
+</div>
+
+<section class="section" style="padding-top: 2rem;">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem;">
+            <!-- Reservation Form -->
+            <div>
+                <div
+                    style="background: white; border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow);">
+                    <h2 style="margin-bottom: 1.5rem;">Reservation Details</h2>
+
+                    <form action="/reserve/<%= hostel.id %>" method="POST">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Full Name *</label>
+                                <input type="text" name="guest_name" class="form-control" required
+                                    value="<%= user ? user.name : '' %>" placeholder="Enter your full name">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Email *</label>
+                                <input type="email" name="guest_email" class="form-control" required
+                                    value="<%= user ? user.email : '' %>" placeholder="your@email.com">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Phone Number *</label>
+                            <input type="tel" name="guest_phone" class="form-control" required
+                                placeholder="e.g., 0241234567">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Check-in Date *</label>
+                                <input type="date" name="check_in" class="form-control" required
+                                    min="<%= new Date().toISOString().split('T')[0] %>">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Check-out Date *</label>
+                                <input type="date" name="check_out" class="form-control" required
+                                    min="<%= new Date().toISOString().split('T')[0] %>">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Number of Guests</label>
+                            <select name="guests" class="form-control">
+                                <option value="1">1 Guest</option>
+                                <option value="2">2 Guests</option>
+                                <option value="3">3 Guests</option>
+                                <option value="4">4 Guests</option>
+                                <option value="5">5+ Guests</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Additional Message (Optional)</label>
+                            <textarea name="message" class="form-control" rows="4"
+                                placeholder="Any special requests or questions..."></textarea>
+                        </div>
+
+                        <div
+                            style="background: var(--primary-50); border: 1px solid var(--primary-200); border-radius: var(--radius); padding: 1rem; margin-bottom: 1.5rem;">
+                            <p style="color: var(--primary-700); font-size: 0.9375rem; margin: 0;">
+                                <i data-lucide="info"
+                                    style="width: 16px; height: 16px; display: inline; vertical-align: middle;"></i>
+                                After submitting, you'll be shown payment details to complete your booking.
+                            </p>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+                            <i data-lucide="check-circle"></i>
+                            Confirm Reservation
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Hostel Summary -->
+            <div>
+                <div
+                    style="background: white; border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow); position: sticky; top: 100px;">
+                    <h3 style="margin-bottom: 1rem;">Booking Summary</h3>
+
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                        <div
+                            style="width: 80px; height: 80px; border-radius: var(--radius); overflow: hidden; flex-shrink: 0;">
+                            <% let images=[]; try { images=JSON.parse(hostel.images || '[]' ); } catch(e) {} %>
+                                <% if (images.length> 0) { %>
+                                    <img src="<%= images[0] %>" alt="<%= hostel.name %>"
+                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                    <% } else { %>
+                                        <div
+                                            style="width: 100%; height: 100%; background: var(--gray-200); display: flex; align-items: center; justify-content: center;">
+                                            🏨</div>
+                                        <% } %>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 1rem; margin-bottom: 0.25rem;">
+                                <%= hostel.name %>
+                            </h4>
+                            <p style="color: var(--gray-500); font-size: 0.875rem; margin: 0;">
+                                <i data-lucide="map-pin" style="width: 12px; height: 12px; display: inline;"></i>
+                                <%= hostel.location %>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style="border-top: 1px solid var(--gray-200); padding-top: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="color: var(--gray-600);">Price per night</span>
+                            <span style="font-weight: 600;">GH₵<%= hostel.price.toFixed(2) %></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="color: var(--gray-600);">Available rooms</span>
+                            <span style="font-weight: 600;">
+                                <%= hostel.rooms %>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--gray-200);">
+                        <a href="/hostel/<%= hostel.id %>"
+                            style="display: flex; align-items: center; gap: 0.5rem; color: var(--primary-600); font-size: 0.875rem;">
+                            <i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i>
+                            Back to hostel details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

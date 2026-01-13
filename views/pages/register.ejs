@@ -1,0 +1,60 @@
+<div class="auth-page">
+    <div class="auth-card">
+        <div class="auth-header">
+            <a href="/" class="auth-logo">
+                <div class="navbar-brand-icon">🏨</div>
+                <%= settings.site_name || 'HostelHub' %>
+            </a>
+            <h1 class="auth-title">Create Account</h1>
+            <p class="auth-subtitle">Join us and start booking</p>
+        </div>
+
+        <% if (typeof error !=='undefined' && error && error.length> 0) { %>
+            <% error.forEach(function(msg) { %>
+                <div class="alert alert-error">
+                    <span class="alert-icon">✕</span>
+                    <%= msg %>
+                </div>
+                <% }); %>
+                    <% } %>
+
+                        <form action="/register" method="POST">
+                            <div class="form-group">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" name="name" class="form-control" required placeholder="John Doe">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" name="email" class="form-control" required
+                                    placeholder="your@email.com">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Phone Number (Optional)</label>
+                                <input type="tel" name="phone" class="form-control" placeholder="0241234567">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Password</label>
+                                <input type="password" name="password" class="form-control" required
+                                    placeholder="Create a password" minlength="6">
+                                <p class="form-hint">At least 6 characters</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Confirm Password</label>
+                                <input type="password" name="confirm_password" class="form-control" required
+                                    placeholder="Confirm your password">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+                                Create Account
+                            </button>
+                        </form>
+
+                        <div class="auth-footer">
+                            Already have an account? <a href="/login">Login</a>
+                        </div>
+    </div>
+</div>

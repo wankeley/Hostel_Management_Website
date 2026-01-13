@@ -1,0 +1,154 @@
+<div style="max-width: 800px; margin: 0 auto;">
+    <div style="margin-bottom: 1.5rem;">
+        <a href="/admin/hostels"
+            style="color: var(--gray-500); display: inline-flex; align-items: center; gap: 0.5rem;">
+            <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i>
+            Back to Hostels
+        </a>
+    </div>
+
+    <div style="background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow); overflow: hidden;">
+        <div style="padding: 1.5rem; border-bottom: 1px solid var(--gray-200);">
+            <h2 style="margin: 0;">
+                <%= hostel ? 'Edit Hostel' : 'Add New Hostel' %>
+            </h2>
+        </div>
+
+        <form action="<%= hostel ? '/admin/hostels/edit/' + hostel.id : '/admin/hostels' %>" method="POST"
+            enctype="multipart/form-data" style="padding: 2rem;">
+
+            <div class="form-group">
+                <label class="form-label">Hostel Name *</label>
+                <input type="text" name="name" class="form-control" required value="<%= hostel ? hostel.name : '' %>"
+                    placeholder="Enter hostel name">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Description *</label>
+                <textarea name="description" class="form-control" rows="5" required
+                    placeholder="Describe your hostel..."><%= hostel ? hostel.description : '' %></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Location *</label>
+                    <input type="text" name="location" class="form-control" required
+                        value="<%= hostel ? hostel.location : '' %>" placeholder="e.g., Accra, Ghana">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Full Address</label>
+                    <input type="text" name="address" class="form-control" value="<%= hostel ? hostel.address : '' %>"
+                        placeholder="Street address">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Price per Night (GH₵) *</label>
+                    <input type="number" name="price" class="form-control" required step="0.01" min="0"
+                        value="<%= hostel ? hostel.price : '' %>" placeholder="150.00">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Number of Rooms</label>
+                    <input type="number" name="rooms" class="form-control" min="1"
+                        value="<%= hostel ? hostel.rooms : '1' %>" placeholder="1">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Amenities</label>
+                <input type="text" name="amenities" class="form-control"
+                    value="<%= hostel && hostel.amenities ? hostel.amenities.join(', ') : '' %>"
+                    placeholder="WiFi, Air Conditioning, Security, Kitchen (comma separated)">
+                <p class="form-hint">Separate amenities with commas</p>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <select name="status" class="form-control">
+                        <option value="available" <%=hostel && hostel.status==='available' ? 'selected' : '' %>
+                            >Available</option>
+                        <option value="booked" <%=hostel && hostel.status==='booked' ? 'selected' : '' %>>Booked
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Featured</label>
+                    <div style="padding-top: 0.5rem;">
+                        <label class="form-check">
+                            <input type="checkbox" name="featured" value="1" <%=hostel && hostel.featured ? 'checked'
+                                : '' %>>
+                            Show on homepage as featured hostel
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File Upload -->
+            <div class="form-group">
+                <label class="form-label">Images & Videos</label>
+                <div class="file-upload">
+                    <input type="file" name="files" multiple accept="image/*,video/*" style="display: none;">
+                    <div class="file-upload-icon">📁</div>
+                    <p class="file-upload-text">
+                        <strong>Click to upload</strong> or drag and drop<br>
+                        <small>Images (JPG, PNG, GIF) and Videos (MP4, WebM)</small>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Existing Files -->
+            <% if (hostel && hostel.images && hostel.images.length> 0) { %>
+                <div class="form-group">
+                    <label class="form-label">Current Images</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                        <% hostel.images.forEach(function(img, i) { %>
+                            <div style="position: relative;">
+                                <img src="<%= img %>" alt="Image <%= i + 1 %>"
+                                    style="width: 100px; height: 80px; object-fit: cover; border-radius: var(--radius);">
+                                <label
+                                    style="position: absolute; top: 4px; right: 4px; background: white; border-radius: 4px; padding: 2px 6px; font-size: 0.75rem; cursor: pointer;">
+                                    <input type="checkbox" name="remove_images" value="<%= img %>"
+                                        style="margin-right: 4px;">
+                                    Remove
+                                </label>
+                            </div>
+                            <% }); %>
+                    </div>
+                </div>
+                <% } %>
+
+                    <% if (hostel && hostel.videos && hostel.videos.length> 0) { %>
+                        <div class="form-group">
+                            <label class="form-label">Current Videos</label>
+                            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                                <% hostel.videos.forEach(function(vid, i) { %>
+                                    <div style="position: relative;">
+                                        <video src="<%= vid %>"
+                                            style="width: 150px; height: 100px; object-fit: cover; border-radius: var(--radius);"></video>
+                                        <label
+                                            style="position: absolute; top: 4px; right: 4px; background: white; border-radius: 4px; padding: 2px 6px; font-size: 0.75rem; cursor: pointer;">
+                                            <input type="checkbox" name="remove_videos" value="<%= vid %>"
+                                                style="margin-right: 4px;">
+                                            Remove
+                                        </label>
+                                    </div>
+                                    <% }); %>
+                            </div>
+                        </div>
+                        <% } %>
+
+                            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i data-lucide="save"></i>
+                                    <%= hostel ? 'Update Hostel' : 'Add Hostel' %>
+                                </button>
+                                <a href="/admin/hostels" class="btn btn-ghost btn-lg">Cancel</a>
+                            </div>
+        </form>
+    </div>
+</div>

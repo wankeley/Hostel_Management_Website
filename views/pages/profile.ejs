@@ -1,0 +1,95 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="container">
+        <h1>My Profile</h1>
+        <p>Manage your account and reservations</p>
+    </div>
+</div>
+
+<section class="section" style="padding-top: 2rem;">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: 300px 1fr; gap: 2rem;">
+            <!-- Sidebar -->
+            <div>
+                <div
+                    style="background: white; border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow); text-align: center;">
+                    <div
+                        style="width: 80px; height: 80px; background: var(--primary-100); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem; color: var(--primary-600);">
+                        <%= user.name.charAt(0).toUpperCase() %>
+                    </div>
+                    <h3 style="margin-bottom: 0.25rem;">
+                        <%= user.name %>
+                    </h3>
+                    <p style="color: var(--gray-500); margin-bottom: 1rem;">
+                        <%= user.email %>
+                    </p>
+
+                    <a href="/logout" class="btn btn-outline" style="width: 100%;">
+                        <i data-lucide="log-out"></i>
+                        Logout
+                    </a>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div>
+                <h2 style="margin-bottom: 1.5rem;">My Reservations</h2>
+
+                <% if (reservations && reservations.length> 0) { %>
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Hostel</th>
+                                    <th>Check-in</th>
+                                    <th>Check-out</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% reservations.forEach(function(r) { %>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <%= r.hostel_name %>
+                                            </strong>
+                                            <br>
+                                            <small style="color: var(--gray-500);">
+                                                <%= r.location %>
+                                            </small>
+                                        </td>
+                                        <td>
+                                            <%= new Date(r.check_in).toLocaleDateString() %>
+                                        </td>
+                                        <td>
+                                            <%= new Date(r.check_out).toLocaleDateString() %>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-<%= r.status %>">
+                                                <%= r.status %>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a href="/confirmation/<%= r.id %>" class="btn btn-ghost btn-sm">
+                                                View Details
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <% } else { %>
+                        <div class="empty-state"
+                            style="background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow);">
+                            <div class="empty-state-icon">📅</div>
+                            <h3 class="empty-state-title">No Reservations Yet</h3>
+                            <p class="empty-state-text">You haven't made any bookings yet.</p>
+                            <a href="/hostels" class="btn btn-primary">Browse Hostels</a>
+                        </div>
+                        <% } %>
+            </div>
+        </div>
+    </div>
+</section>

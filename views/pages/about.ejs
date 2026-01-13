@@ -1,0 +1,49 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="container">
+        <h1>About Us</h1>
+        <p>Learn more about our mission</p>
+    </div>
+</div>
+
+<section class="section" style="padding-top: 2rem;">
+    <div class="container">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <div style="background: white; border-radius: var(--radius-lg); padding: 3rem; box-shadow: var(--shadow);">
+                <h2 style="margin-bottom: 1.5rem;">Welcome to <%= settings.site_name || 'HostelHub' %>
+                </h2>
+
+                <p style="font-size: 1.125rem; color: var(--gray-600); line-height: 1.8; margin-bottom: 2rem;">
+                    <%= settings.about_text
+                        || 'We are dedicated to providing comfortable, affordable, and safe hostel accommodations for travelers, students, and anyone seeking quality lodging at great prices.'
+                        %>
+                </p>
+
+                <h3 style="margin-bottom: 1rem;">Our Mission</h3>
+                <p style="color: var(--gray-600); line-height: 1.8; margin-bottom: 2rem;">
+                    To make quality accommodation accessible to everyone. We believe that finding a comfortable place to
+                    stay shouldn't be complicated or expensive. That's why we've created a platform that connects guests
+                    with the best hostels in the area.
+                </p>
+
+                <h3 style="margin-bottom: 1rem;">Why Choose Us?</h3>
+                <ul style="color: var(--gray-600); line-height: 2; margin-bottom: 2rem; padding-left: 1.5rem;">
+                    <li>Verified and quality hostels</li>
+                    <li>Transparent pricing with no hidden fees</li>
+                    <li>Easy and secure booking process</li>
+                    <li>Multiple payment options including mobile money</li>
+                    <li>24/7 customer support</li>
+                    <li>Safe and secure accommodations</li>
+                </ul>
+
+                <div
+                    style="background: var(--primary-50); padding: 2rem; border-radius: var(--radius-lg); text-align: center;">
+                    <h3 style="color: var(--primary-700); margin-bottom: 0.5rem;">Ready to Book?</h3>
+                    <p style="color: var(--primary-600); margin-bottom: 1.5rem;">Browse our collection of comfortable
+                        hostels today.</p>
+                    <a href="/hostels" class="btn btn-primary">View Hostels</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

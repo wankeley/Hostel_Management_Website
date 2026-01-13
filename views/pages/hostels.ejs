@@ -1,0 +1,145 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="container">
+        <h1>Our Hostels</h1>
+        <p>Find comfortable accommodations at affordable prices</p>
+    </div>
+</div>
+
+<section class="section" style="padding-top: 2rem;">
+    <div class="container">
+        <!-- Filters -->
+        <div class="filters">
+            <form action="/hostels" method="GET">
+                <div class="filters-row">
+                    <div class="form-group">
+                        <label class="form-label">Search</label>
+                        <input type="text" name="search" class="form-control" placeholder="Search hostels..."
+                            value="<%= filters.search || '' %>">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <select name="location" class="form-control">
+                            <option value="">All Locations</option>
+                            <% locations.forEach(function(loc) { %>
+                                <option value="<%= loc.location %>" <%=filters.location===loc.location ? 'selected' : ''
+                                    %>>
+                                    <%= loc.location %>
+                                </option>
+                                <% }); %>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Min Price (GH₵)</label>
+                        <input type="number" name="minPrice" class="form-control" placeholder="0"
+                            value="<%= filters.minPrice || '' %>">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Max Price (GH₵)</label>
+                        <input type="number" name="maxPrice" class="form-control" placeholder="1000"
+                            value="<%= filters.maxPrice || '' %>">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <select name="status" class="form-control">
+                            <option value="all">All</option>
+                            <option value="available" <%=filters.status==='available' ? 'selected' : '' %>>Available
+                            </option>
+                            <option value="booked" <%=filters.status==='booked' ? 'selected' : '' %>>Booked</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="display: flex; gap: 0.5rem; align-items: flex-end;">
+                        <button type="submit" class="btn btn-primary">
+                            <i data-lucide="search"></i>
+                            Search
+                        </button>
+                        <a href="/hostels" class="btn btn-ghost">Clear</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Results -->
+        <% if (hostels && hostels.length> 0) { %>
+            <p style="color: var(--gray-500); margin-bottom: 1.5rem;">
+                Showing <%= hostels.length %> hostel<%= hostels.length !==1 ? 's' : '' %>
+            </p>
+
+            <div class="hostel-grid">
+                <% hostels.forEach(function(hostel) { %>
+                    <div class="card">
+                        <div class="card-image">
+                            <% let images=[]; try { images=JSON.parse(hostel.images || '[]' ); } catch(e) {} %>
+                                <% if (images.length> 0) { %>
+                                    <img src="<%= images[0] %>" alt="<%= hostel.name %>">
+                                    <% } else { %>
+                                        <div class="card-placeholder">🏨</div>
+                                        <% } %>
+
+                                            <span class="card-badge <%= hostel.status %>">
+                                                <%= hostel.status %>
+                                            </span>
+                                            <% if (hostel.featured) { %>
+                                                <span class="card-badge featured" style="left: 1rem; right: auto;">★
+                                                    Featured</span>
+                                                <% } %>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="card-location">
+                                <i data-lucide="map-pin" style="width: 14px; height: 14px;"></i>
+                                <%= hostel.location %>
+                            </div>
+
+                            <h3 class="card-title">
+                                <a href="/hostel/<%= hostel.id %>">
+                                    <%= hostel.name %>
+                                </a>
+                            </h3>
+
+                            <p class="card-description">
+                                <%= hostel.description %>
+                            </p>
+
+                            <% let amenities=[]; try { amenities=JSON.parse(hostel.amenities || '[]' ); } catch(e) {} %>
+                                <% if (amenities.length> 0) { %>
+                                    <div class="card-amenities">
+                                        <% amenities.slice(0, 3).forEach(function(amenity) { %>
+                                            <span class="card-amenity">
+                                                <%= amenity %>
+                                            </span>
+                                            <% }); %>
+                                                <% if (amenities.length> 3) { %>
+                                                    <span class="card-amenity">+<%= amenities.length - 3 %> more</span>
+                                                    <% } %>
+                                    </div>
+                                    <% } %>
+
+                                        <div class="card-footer">
+                                            <div class="card-price">
+                                                GH₵<%= hostel.price.toFixed(2) %>
+                                                    <span>/night</span>
+                                            </div>
+                                            <a href="/hostel/<%= hostel.id %>" class="btn btn-primary btn-sm">
+                                                View Details
+                                            </a>
+                                        </div>
+                        </div>
+                    </div>
+                    <% }); %>
+            </div>
+            <% } else { %>
+                <div class="empty-state">
+                    <div class="empty-state-icon">🔍</div>
+                    <h3 class="empty-state-title">No hostels found</h3>
+                    <p class="empty-state-text">Try adjusting your search filters or check back later.</p>
+                    <a href="/hostels" class="btn btn-primary">Clear Filters</a>
+                </div>
+                <% } %>
+    </div>
+</section>

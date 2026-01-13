@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= typeof title !=='undefined' ? title + ' | ' : '' %>Admin - <%= settings.site_name || 'HostelHub' %>
+    </title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <a href="/admin" class="sidebar-brand">
+                    <div class="sidebar-brand-icon">🏨</div>
+                    <span>
+                        <%= settings.site_name || 'HostelHub' %>
+                    </span>
+                </a>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="sidebar-section">Main</div>
+                <a href="/admin" class="sidebar-link <%= title === 'Admin Dashboard' ? 'active' : '' %>">
+                    <i data-lucide="layout-dashboard" class="sidebar-link-icon"></i>
+                    Dashboard
+                </a>
+
+                <div class="sidebar-section">Management</div>
+                <a href="/admin/hostels" class="sidebar-link <%= title === 'Manage Hostels' ? 'active' : '' %>">
+                    <i data-lucide="building-2" class="sidebar-link-icon"></i>
+                    Hostels
+                </a>
+                <a href="/admin/reservations"
+                    class="sidebar-link <%= title === 'Manage Reservations' ? 'active' : '' %>">
+                    <i data-lucide="calendar-check" class="sidebar-link-icon"></i>
+                    Reservations
+                </a>
+                <a href="/admin/users" class="sidebar-link <%= title === 'Manage Users' ? 'active' : '' %>">
+                    <i data-lucide="users" class="sidebar-link-icon"></i>
+                    Users
+                </a>
+
+                <div class="sidebar-section">Settings</div>
+                <a href="/admin/settings" class="sidebar-link <%= title === 'Settings' ? 'active' : '' %>">
+                    <i data-lucide="settings" class="sidebar-link-icon"></i>
+                    Settings
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="/" class="sidebar-link">
+                    <i data-lucide="external-link" class="sidebar-link-icon"></i>
+                    View Site
+                </a>
+                <a href="/logout" class="sidebar-link">
+                    <i data-lucide="log-out" class="sidebar-link-icon"></i>
+                    Logout
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="admin-content">
+            <header class="admin-header">
+                <button class="btn btn-icon btn-ghost" onclick="toggleSidebar()" style="display: none;">
+                    <i data-lucide="menu"></i>
+                </button>
+                <h1 class="admin-title">
+                    <%= title %>
+                </h1>
+
+                <div class="admin-user">
+                    <span>
+                        <%= user ? user.name : 'Admin' %>
+                    </span>
+                    <div class="admin-avatar">
+                        <%= user ? user.name.charAt(0).toUpperCase() : 'A' %>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Flash Messages -->
+            <% if (typeof success !=='undefined' && success && success.length> 0) { %>
+                <div style="padding: 0 2rem; padding-top: 1rem;">
+                    <% success.forEach(function(msg) { %>
+                        <div class="alert alert-success" data-dismiss="auto">
+                            <span class="alert-icon">✓</span>
+                            <%= msg %>
+                        </div>
+                        <% }); %>
+                </div>
+                <% } %>
+
+                    <% if (typeof error !=='undefined' && error && error.length> 0) { %>
+                        <div style="padding: 0 2rem; padding-top: 1rem;">
+                            <% error.forEach(function(msg) { %>
+                                <div class="alert alert-error" data-dismiss="auto">
+                                    <span class="alert-icon">✕</span>
+                                    <%= msg %>
+                                </div>
+                                <% }); %>
+                        </div>
+                        <% } %>
+
+                            <main class="admin-main">
+                                <%- body %>
+                            </main>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

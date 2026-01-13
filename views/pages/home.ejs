@@ -1,0 +1,209 @@
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-particles"></div>
+
+    <div class="hero-content">
+        <span class="hero-badge">
+            <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
+            Premium Hostel Booking
+        </span>
+
+        <h1 class="hero-title">
+            Find Your <span>Perfect Stay</span>
+        </h1>
+
+        <p class="hero-subtitle">
+            Discover comfortable, affordable hostels for your next adventure. Book with confidence and enjoy a memorable
+            stay.
+        </p>
+
+        <div class="hero-cta">
+            <a href="/hostels" class="btn btn-primary btn-lg">
+                <i data-lucide="search"></i>
+                Browse Hostels
+            </a>
+            <a href="/about" class="btn btn-outline-light btn-lg">
+                Learn More
+            </a>
+        </div>
+
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="hero-stat-value">
+                    <%= stats.totalHostels || 0 %>
+                </span>
+                <span class="hero-stat-label">Hostels</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-value">
+                    <%= stats.availableRooms || 0 %>
+                </span>
+                <span class="hero-stat-label">Rooms Available</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-value">
+                    <%= stats.happyGuests || 0 %>+
+                </span>
+                <span class="hero-stat-label">Happy Guests</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Hostels Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">Featured</span>
+            <h2 class="section-title">Popular Hostels</h2>
+            <p class="section-subtitle">
+                Explore our most loved accommodations, handpicked for quality and comfort.
+            </p>
+        </div>
+
+        <% if (featuredHostels && featuredHostels.length> 0) { %>
+            <div class="hostel-grid">
+                <% featuredHostels.forEach(function(hostel) { %>
+                    <div class="card">
+                        <div class="card-image">
+                            <% let images=[]; try { images=JSON.parse(hostel.images || '[]' ); } catch(e) {} %>
+                                <% if (images.length> 0) { %>
+                                    <img src="<%= images[0] %>" alt="<%= hostel.name %>">
+                                    <% } else { %>
+                                        <div class="card-placeholder">🏨</div>
+                                        <% } %>
+
+                                            <span class="card-badge <%= hostel.status %>">
+                                                <%= hostel.status %>
+                                            </span>
+                                            <% if (hostel.featured) { %>
+                                                <span class="card-badge featured" style="left: 1rem; right: auto;">★
+                                                    Featured</span>
+                                                <% } %>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="card-location">
+                                <i data-lucide="map-pin" style="width: 14px; height: 14px;"></i>
+                                <%= hostel.location %>
+                            </div>
+
+                            <h3 class="card-title">
+                                <a href="/hostel/<%= hostel.id %>">
+                                    <%= hostel.name %>
+                                </a>
+                            </h3>
+
+                            <p class="card-description">
+                                <%= hostel.description %>
+                            </p>
+
+                            <% let amenities=[]; try { amenities=JSON.parse(hostel.amenities || '[]' ); } catch(e) {} %>
+                                <% if (amenities.length> 0) { %>
+                                    <div class="card-amenities">
+                                        <% amenities.slice(0, 3).forEach(function(amenity) { %>
+                                            <span class="card-amenity">
+                                                <%= amenity %>
+                                            </span>
+                                            <% }); %>
+                                                <% if (amenities.length> 3) { %>
+                                                    <span class="card-amenity">+<%= amenities.length - 3 %> more</span>
+                                                    <% } %>
+                                    </div>
+                                    <% } %>
+
+                                        <div class="card-footer">
+                                            <div class="card-price">
+                                                GH₵<%= hostel.price.toFixed(2) %>
+                                                    <span>/night</span>
+                                            </div>
+                                            <a href="/hostel/<%= hostel.id %>" class="btn btn-primary btn-sm">
+                                                View Details
+                                            </a>
+                                        </div>
+                        </div>
+                    </div>
+                    <% }); %>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="/hostels" class="btn btn-outline btn-lg">
+                    View All Hostels
+                    <i data-lucide="arrow-right"></i>
+                </a>
+            </div>
+            <% } else { %>
+                <div class="empty-state">
+                    <div class="empty-state-icon">🏨</div>
+                    <h3 class="empty-state-title">No hostels available yet</h3>
+                    <p class="empty-state-text">Check back soon for amazing accommodations!</p>
+                </div>
+                <% } %>
+    </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="section section-dark">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">Why Choose Us</span>
+            <h2 class="section-title">The Best Hostel Experience</h2>
+            <p class="section-subtitle">
+                We provide everything you need for a comfortable and memorable stay.
+            </p>
+        </div>
+
+        <div class="hostel-grid">
+            <div class="card" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                <div class="card-body">
+                    <div
+                        style="width: 60px; height: 60px; background: var(--gradient-primary); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                        <i data-lucide="shield-check" style="color: white; width: 28px; height: 28px;"></i>
+                    </div>
+                    <h3 style="color: white; margin-bottom: 0.75rem;">Safe & Secure</h3>
+                    <p style="color: var(--gray-400);">24/7 security and safe environment for all our guests.</p>
+                </div>
+            </div>
+
+            <div class="card" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                <div class="card-body">
+                    <div
+                        style="width: 60px; height: 60px; background: var(--gradient-accent); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                        <i data-lucide="wallet" style="color: white; width: 28px; height: 28px;"></i>
+                    </div>
+                    <h3 style="color: white; margin-bottom: 0.75rem;">Affordable Prices</h3>
+                    <p style="color: var(--gray-400);">Quality accommodation at prices that won't break the bank.</p>
+                </div>
+            </div>
+
+            <div class="card" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                <div class="card-body">
+                    <div
+                        style="width: 60px; height: 60px; background: linear-gradient(135deg, #3b82f6, #60a5fa); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                        <i data-lucide="headphones" style="color: white; width: 28px; height: 28px;"></i>
+                    </div>
+                    <h3 style="color: white; margin-bottom: 0.75rem;">24/7 Support</h3>
+                    <p style="color: var(--gray-400);">Our friendly team is always here to help you.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section">
+    <div class="container">
+        <div
+            style="background: var(--gradient-primary); border-radius: var(--radius-xl); padding: 4rem 2rem; text-align: center;">
+            <h2 style="color: white; font-size: 2rem; margin-bottom: 1rem;">Ready to Book Your Stay?</h2>
+            <p
+                style="color: rgba(255,255,255,0.8); font-size: 1.125rem; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto;">
+                Browse our collection of comfortable hostels and find your perfect accommodation today.
+            </p>
+            <a href="/hostels" class="btn btn-secondary btn-lg">
+                Explore Hostels
+                <i data-lucide="arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>

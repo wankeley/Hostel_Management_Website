@@ -1,0 +1,19 @@
+<div
+    style="min-height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 2rem; margin-top: 72px;">
+    <div>
+        <div style="font-size: 6rem; margin-bottom: 1rem;">⚠️</div>
+        <h1 style="font-size: 2rem; margin-bottom: 0.5rem; color: var(--gray-900);">Something Went Wrong</h1>
+        <p style="color: var(--gray-500); margin-bottom: 1rem; max-width: 400px;">
+            We're sorry, but something unexpected happened.
+        </p>
+        <% if (typeof error !=='undefined' && error) { %>
+            <p style="color: var(--error); font-size: 0.875rem; margin-bottom: 2rem;">
+                <%= error %>
+            </p>
+            <% } %>
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <a href="/" class="btn btn-primary">Go Home</a>
+                    <a href="javascript:history.back()" class="btn btn-outline">Go Back</a>
+                </div>
+    </div>
+</div>

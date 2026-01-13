@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="<%= settings.site_tagline || 'Find Your Perfect Stay' %> - Browse and book comfortable hostels at affordable prices.">
+    <title><%= typeof title !== 'undefined' ? title + ' | ' : '' %><%= settings.site_name || 'HostelHub' %></title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="navbar-brand">
+                <div class="navbar-brand-icon">🏨</div>
+                <%= settings.site_name || 'HostelHub' %>
+            </a>
+            
+            <button class="navbar-toggle" onclick="document.querySelector('.navbar-nav').classList.toggle('active')">
+                <i data-lucide="menu"></i>
+            </button>
+            
+            <ul class="navbar-nav">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/hostels" class="nav-link">Hostels</a></li>
+                <li><a href="/payment-info" class="nav-link">Payment</a></li>
+                <li><a href="/about" class="nav-link">About</a></li>
+                <li><a href="/contact" class="nav-link">Contact</a></li>
+                
+                <div class="nav-auth">
+                    <% if (user) { %>
+                        <% if (user.role === 'admin') { %>
+                            <a href="/admin" class="btn btn-ghost">
+                                <i data-lucide="layout-dashboard"></i>
+                                Dashboard
+                            </a>
+                        <% } else { %>
+                            <a href="/profile" class="btn btn-ghost">
+                                <i data-lucide="user"></i>
+                                Profile
+                            </a>
+                        <% } %>
+                        <a href="/logout" class="btn btn-outline btn-sm">Logout</a>
+                    <% } else { %>
+                        <a href="/login" class="btn btn-ghost">Login</a>
+                        <a href="/register" class="btn btn-primary">Sign Up</a>
+                    <% } %>
+                </div>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Flash Messages -->
+    <% if (success && success.length > 0) { %>
+        <div style="position: fixed; top: 80px; right: 20px; z-index: 1000; max-width: 400px;">
+            <% success.forEach(function(msg) { %>
+                <div class="alert alert-success" data-dismiss="auto">
+                    <span class="alert-icon">✓</span>
+                    <%= msg %>
+                </div>
+            <% }); %>
+        </div>
+    <% } %>
+    
+    <% if (error && error.length > 0) { %>
+        <div style="position: fixed; top: 80px; right: 20px; z-index: 1000; max-width: 400px;">
+            <% error.forEach(function(msg) { %>
+                <div class="alert alert-error" data-dismiss="auto">
+                    <span class="alert-icon">✕</span>
+                    <%= msg %>
+                </div>
+            <% }); %>
+        </div>
+    <% } %>
+    
+    <!-- Main Content -->
+    <main>
+        <%- body %>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="/" class="footer-brand">
+                        <div class="navbar-brand-icon">🏨</div>
+                        <%= settings.site_name || 'HostelHub' %>
+                    </a>
+                    <p class="footer-description">
+                        <%= settings.about_text || 'Find your perfect stay with us. We offer comfortable, affordable accommodations for travelers and students.' %>
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/hostels">All Hostels</a></li>
+                        <li><a href="/payment-info">Payment Info</a></li>
+                        <li><a href="/about">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">Account</h4>
+                    <ul class="footer-links">
+                        <% if (user) { %>
+                            <li><a href="/profile">My Profile</a></li>
+                            <li><a href="/logout">Logout</a></li>
+                        <% } else { %>
+                            <li><a href="/login">Login</a></li>
+                            <li><a href="/register">Register</a></li>
+                        <% } %>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">Contact</h4>
+                    <ul class="footer-links">
+                        <li><%= settings.contact_email || 'info@hostelhub.com' %></li>
+                        <li><%= settings.contact_phone || '+233 XX XXX XXXX' %></li>
+                        <li><%= settings.contact_address || 'Accra, Ghana' %></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; <%= new Date().getFullYear() %> <%= settings.site_name || 'HostelHub' %>. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script src="/js/main.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

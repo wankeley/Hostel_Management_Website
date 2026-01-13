@@ -1,0 +1,145 @@
+<!-- Stats Grid -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon primary">
+            <i data-lucide="building-2"></i>
+        </div>
+        <div class="stat-content">
+            <div class="stat-value">
+                <%= stats.totalHostels %>
+            </div>
+            <div class="stat-label">Total Hostels</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon accent">
+            <i data-lucide="calendar-check"></i>
+        </div>
+        <div class="stat-content">
+            <div class="stat-value">
+                <%= stats.totalReservations %>
+            </div>
+            <div class="stat-label">Total Reservations</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon info">
+            <i data-lucide="clock"></i>
+        </div>
+        <div class="stat-content">
+            <div class="stat-value">
+                <%= stats.pendingReservations %>
+            </div>
+            <div class="stat-label">Pending Bookings</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon success">
+            <i data-lucide="users"></i>
+        </div>
+        <div class="stat-content">
+            <div class="stat-value">
+                <%= stats.totalUsers %>
+            </div>
+            <div class="stat-label">Registered Users</div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Stats Row -->
+<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+    <div style="background: white; border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow);">
+        <h3 style="margin-bottom: 1rem; font-size: 1rem; color: var(--gray-600);">Hostel Availability</h3>
+        <div style="display: flex; gap: 2rem;">
+            <div>
+                <div style="font-size: 2rem; font-weight: 700; color: var(--success);">
+                    <%= stats.availableHostels %>
+                </div>
+                <div style="color: var(--gray-500);">Available</div>
+            </div>
+            <div>
+                <div style="font-size: 2rem; font-weight: 700; color: var(--error);">
+                    <%= stats.bookedHostels %>
+                </div>
+                <div style="color: var(--gray-500);">Booked</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="background: white; border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow);">
+        <h3 style="margin-bottom: 1rem; font-size: 1rem; color: var(--gray-600);">Quick Actions</h3>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <a href="/admin/hostels/new" class="btn btn-primary btn-sm">
+                <i data-lucide="plus"></i>
+                Add Hostel
+            </a>
+            <a href="/admin/reservations" class="btn btn-outline btn-sm">
+                View Reservations
+            </a>
+            <a href="/admin/settings" class="btn btn-ghost btn-sm">
+                Settings
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Reservations -->
+<div style="background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow); overflow: hidden;">
+    <div
+        style="padding: 1.5rem; border-bottom: 1px solid var(--gray-200); display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="margin: 0;">Recent Reservations</h3>
+        <a href="/admin/reservations" style="color: var(--primary-600); font-size: 0.875rem;">View All →</a>
+    </div>
+
+    <% if (recentReservations && recentReservations.length> 0) { %>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Guest</th>
+                    <th>Hostel</th>
+                    <th>Check-in</th>
+                    <th>Status</th>
+                    <th>Booked</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% recentReservations.forEach(function(r) { %>
+                    <tr>
+                        <td>
+                            <strong>
+                                <%= r.guest_name %>
+                            </strong>
+                            <br>
+                            <small style="color: var(--gray-500);">
+                                <%= r.guest_email %>
+                            </small>
+                        </td>
+                        <td>
+                            <%= r.hostel_name %>
+                        </td>
+                        <td>
+                            <%= new Date(r.check_in).toLocaleDateString() %>
+                        </td>
+                        <td>
+                            <span class="badge badge-<%= r.status %>">
+                                <%= r.status %>
+                            </span>
+                        </td>
+                        <td style="color: var(--gray-500); font-size: 0.875rem;">
+                            <%= new Date(r.created_at).toLocaleDateString() %>
+                        </td>
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+        <% } else { %>
+            <div class="empty-state" style="padding: 3rem;">
+                <div class="empty-state-icon">📅</div>
+                <h3 class="empty-state-title">No Reservations Yet</h3>
+                <p class="empty-state-text">Reservations will appear here when customers book.</p>
+            </div>
+            <% } %>
+</div>

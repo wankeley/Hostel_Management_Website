@@ -1,0 +1,132 @@
+<div style="max-width: 900px;">
+    <form action="/admin/settings" method="POST">
+        <!-- Site Settings -->
+        <div
+            style="background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow); margin-bottom: 2rem; overflow: hidden;">
+            <div style="padding: 1.5rem; border-bottom: 1px solid var(--gray-200);">
+                <h2 style="margin: 0;">Site Settings</h2>
+            </div>
+
+            <div style="padding: 2rem;">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Site Name</label>
+                        <input type="text" name="site_name" class="form-control"
+                            value="<%= siteSettings.site_name || '' %>" placeholder="HostelHub">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Tagline</label>
+                        <input type="text" name="site_tagline" class="form-control"
+                            value="<%= siteSettings.site_tagline || '' %>" placeholder="Find Your Perfect Stay">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Contact Email</label>
+                        <input type="email" name="contact_email" class="form-control"
+                            value="<%= siteSettings.contact_email || '' %>" placeholder="info@hostelhub.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Contact Phone</label>
+                        <input type="text" name="contact_phone" class="form-control"
+                            value="<%= siteSettings.contact_phone || '' %>" placeholder="+233 XX XXX XXXX">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Contact Address</label>
+                    <input type="text" name="contact_address" class="form-control"
+                        value="<%= siteSettings.contact_address || '' %>" placeholder="Accra, Ghana">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">About Text</label>
+                    <textarea name="about_text" class="form-control" rows="4"
+                        placeholder="Brief description about your hostel service..."><%= siteSettings.about_text || '' %></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Settings -->
+        <div
+            style="background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow); margin-bottom: 2rem; overflow: hidden;">
+            <div style="padding: 1.5rem; border-bottom: 1px solid var(--gray-200);">
+                <h2 style="margin: 0;">Payment Information</h2>
+                <p style="color: var(--gray-500); margin: 0.5rem 0 0;">This information will be shown to customers for
+                    payment</p>
+            </div>
+
+            <div style="padding: 2rem;">
+                <h3 style="margin-bottom: 1rem; color: var(--gray-700);">🏦 Bank Transfer</h3>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Bank Name</label>
+                        <input type="text" name="bank_name" class="form-control"
+                            value="<%= paymentInfo.bank_name || '' %>" placeholder="Ghana Commercial Bank">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Account Number</label>
+                        <input type="text" name="account_number" class="form-control"
+                            value="<%= paymentInfo.account_number || '' %>" placeholder="1234567890">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Account Name</label>
+                    <input type="text" name="account_name" class="form-control"
+                        value="<%= paymentInfo.account_name || '' %>" placeholder="HostelHub Ltd">
+                </div>
+
+                <hr style="margin: 2rem 0; border: none; border-top: 1px solid var(--gray-200);">
+
+                <h3 style="margin-bottom: 1rem; color: var(--gray-700);">📱 Mobile Money</h3>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Provider</label>
+                        <select name="momo_provider" class="form-control">
+                            <option value="MTN Mobile Money" <%=paymentInfo.momo_provider==='MTN Mobile Money'
+                                ? 'selected' : '' %>>MTN Mobile Money</option>
+                            <option value="Vodafone Cash" <%=paymentInfo.momo_provider==='Vodafone Cash' ? 'selected'
+                                : '' %>>Vodafone Cash</option>
+                            <option value="AirtelTigo Money" <%=paymentInfo.momo_provider==='AirtelTigo Money'
+                                ? 'selected' : '' %>>AirtelTigo Money</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Mobile Number</label>
+                        <input type="text" name="momo_number" class="form-control"
+                            value="<%= paymentInfo.momo_number || '' %>" placeholder="0241234567">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Account Name</label>
+                    <input type="text" name="momo_name" class="form-control" value="<%= paymentInfo.momo_name || '' %>"
+                        placeholder="HostelHub">
+                </div>
+
+                <hr style="margin: 2rem 0; border: none; border-top: 1px solid var(--gray-200);">
+
+                <div class="form-group">
+                    <label class="form-label">Payment Instructions</label>
+                    <textarea name="instructions" class="form-control" rows="3"
+                        placeholder="Additional instructions for customers..."><%= paymentInfo.instructions || '' %></textarea>
+                    <p class="form-hint">This message will be shown to customers on the payment page</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Save Button -->
+        <button type="submit" class="btn btn-primary btn-lg">
+            <i data-lucide="save"></i>
+            Save Settings
+        </button>
+    </form>
+</div>

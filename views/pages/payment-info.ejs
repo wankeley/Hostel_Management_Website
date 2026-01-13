@@ -1,0 +1,134 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="container">
+        <h1>Payment Information</h1>
+        <p>Choose your preferred payment method</p>
+    </div>
+</div>
+
+<section class="section" style="padding-top: 2rem;">
+    <div class="container">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <% if (paymentInfo) { %>
+                <div class="payment-methods">
+                    <!-- Bank Transfer -->
+                    <div class="payment-card">
+                        <div class="payment-icon">🏦</div>
+                        <h3 class="payment-title">Bank Transfer</h3>
+
+                        <div class="payment-detail">
+                            <div class="payment-label">Bank Name</div>
+                            <div class="payment-value">
+                                <%= paymentInfo.bank_name %>
+                            </div>
+                        </div>
+
+                        <div class="payment-detail">
+                            <div class="payment-label">Account Number</div>
+                            <div class="payment-value">
+                                <%= paymentInfo.account_number %>
+                            </div>
+                        </div>
+
+                        <div class="payment-detail">
+                            <div class="payment-label">Account Name</div>
+                            <div class="payment-value">
+                                <%= paymentInfo.account_name %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Money -->
+                    <div class="payment-card">
+                        <div class="payment-icon">📱</div>
+                        <h3 class="payment-title">Mobile Money</h3>
+
+                        <div class="payment-detail">
+                            <div class="payment-label">Provider</div>
+                            <div class="payment-value">
+                                <%= paymentInfo.momo_provider %>
+                            </div>
+                        </div>
+
+                        <div class="payment-detail">
+                            <div class="payment-label">Number</div>
+                            <div class="payment-value">
+                                <%= paymentInfo.momo_number %>
+                            </div>
+                        </div>
+
+                        <div class="payment-detail">
+                            <div class="payment-label">Name</div>
+                            <div class="payment-value">
+                                <%= paymentInfo.momo_name %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <% if (paymentInfo.instructions) { %>
+                    <div
+                        style="margin-top: 2rem; padding: 1.5rem; background: var(--primary-50); border: 1px solid var(--primary-200); border-radius: var(--radius-lg);">
+                        <h4
+                            style="color: var(--primary-700); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i data-lucide="info" style="width: 20px; height: 20px;"></i>
+                            Payment Instructions
+                        </h4>
+                        <p style="margin: 0; color: var(--primary-700);">
+                            <%= paymentInfo.instructions %>
+                        </p>
+                    </div>
+                    <% } %>
+                        <% } else { %>
+                            <div class="empty-state">
+                                <div class="empty-state-icon">💳</div>
+                                <h3 class="empty-state-title">Payment Information Not Available</h3>
+                                <p class="empty-state-text">Please contact us for payment details.</p>
+                            </div>
+                            <% } %>
+
+                                <!-- How to Pay -->
+                                <div style="margin-top: 3rem;">
+                                    <h2 style="text-align: center; margin-bottom: 2rem;">How to Pay</h2>
+
+                                    <div
+                                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                                        <div style="text-align: center; padding: 1.5rem;">
+                                            <div
+                                                style="width: 60px; height: 60px; background: var(--primary-100); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; color: var(--primary-600);">
+                                                1</div>
+                                            <h4>Make a Reservation</h4>
+                                            <p style="color: var(--gray-500);">Book your preferred hostel through our
+                                                website</p>
+                                        </div>
+
+                                        <div style="text-align: center; padding: 1.5rem;">
+                                            <div
+                                                style="width: 60px; height: 60px; background: var(--primary-100); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; color: var(--primary-600);">
+                                                2</div>
+                                            <h4>Make Payment</h4>
+                                            <p style="color: var(--gray-500);">Transfer funds using bank or mobile money
+                                            </p>
+                                        </div>
+
+                                        <div style="text-align: center; padding: 1.5rem;">
+                                            <div
+                                                style="width: 60px; height: 60px; background: var(--primary-100); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; color: var(--primary-600);">
+                                                3</div>
+                                            <h4>Get Confirmation</h4>
+                                            <p style="color: var(--gray-500);">Receive email confirmation of your
+                                                booking</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- CTA -->
+                                <div style="text-align: center; margin-top: 3rem;">
+                                    <a href="/hostels" class="btn btn-primary btn-lg">
+                                        <i data-lucide="search"></i>
+                                        Browse Hostels
+                                    </a>
+                                </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,97 @@
+<!-- Page Header -->
+<div class="page-header">
+    <div class="container">
+        <h1>Contact Us</h1>
+        <p>Get in touch with our team</p>
+    </div>
+</div>
+
+<section class="section" style="padding-top: 2rem;">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 1000px; margin: 0 auto;">
+            <!-- Contact Info -->
+            <div>
+                <h2 style="margin-bottom: 1.5rem;">Get In Touch</h2>
+                <p style="color: var(--gray-600); margin-bottom: 2rem;">
+                    Have questions? We're here to help. Reach out to us through any of the channels below.
+                </p>
+
+                <div style="margin-bottom: 2rem;">
+                    <div style="display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem;">
+                        <div
+                            style="width: 50px; height: 50px; background: var(--primary-50); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: var(--primary-600); flex-shrink: 0;">
+                            <i data-lucide="mail" style="width: 24px; height: 24px;"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 0.25rem;">Email</h4>
+                            <p style="color: var(--gray-600); margin: 0;">
+                                <%= settings.contact_email || 'info@hostelhub.com' %>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem;">
+                        <div
+                            style="width: 50px; height: 50px; background: var(--primary-50); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: var(--primary-600); flex-shrink: 0;">
+                            <i data-lucide="phone" style="width: 24px; height: 24px;"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 0.25rem;">Phone</h4>
+                            <p style="color: var(--gray-600); margin: 0;">
+                                <%= settings.contact_phone || '+233 XX XXX XXXX' %>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                        <div
+                            style="width: 50px; height: 50px; background: var(--primary-50); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: var(--primary-600); flex-shrink: 0;">
+                            <i data-lucide="map-pin" style="width: 24px; height: 24px;"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 0.25rem;">Address</h4>
+                            <p style="color: var(--gray-600); margin: 0;">
+                                <%= settings.contact_address || 'Accra, Ghana' %>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div>
+                <div
+                    style="background: white; border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow);">
+                    <h3 style="margin-bottom: 1.5rem;">Send Us a Message</h3>
+
+                    <form>
+                        <div class="form-group">
+                            <label class="form-label">Your Name</label>
+                            <input type="text" class="form-control" placeholder="John Doe" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-control" placeholder="your@email.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Subject</label>
+                            <input type="text" class="form-control" placeholder="How can we help?" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Message</label>
+                            <textarea class="form-control" rows="4" placeholder="Your message..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            <i data-lucide="send"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

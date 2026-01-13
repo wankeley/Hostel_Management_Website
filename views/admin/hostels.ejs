@@ -1,0 +1,112 @@
+<!-- Header Actions -->
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <div>
+        <p style="color: var(--gray-500); margin: 0;">Manage your hostels</p>
+    </div>
+    <a href="/admin/hostels/new" class="btn btn-primary">
+        <i data-lucide="plus"></i>
+        Add New Hostel
+    </a>
+</div>
+
+<!-- Hostels Table -->
+<% if (hostels && hostels.length> 0) { %>
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Hostel</th>
+                    <th>Location</th>
+                    <th>Price</th>
+                    <th>Rooms</th>
+                    <th>Status</th>
+                    <th>Featured</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% hostels.forEach(function(hostel) { %>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div
+                                    style="width: 50px; height: 50px; border-radius: var(--radius); overflow: hidden; flex-shrink: 0;">
+                                    <% let images=[]; try { images=JSON.parse(hostel.images || '[]' ); } catch(e) {} %>
+                                        <% if (images.length> 0) { %>
+                                            <img src="<%= images[0] %>" alt="<%= hostel.name %>"
+                                                style="width: 100%; height: 100%; object-fit: cover;">
+                                            <% } else { %>
+                                                <div
+                                                    style="width: 100%; height: 100%; background: var(--gray-200); display: flex; align-items: center; justify-content: center;">
+                                                    🏨</div>
+                                                <% } %>
+                                </div>
+                                <div>
+                                    <strong>
+                                        <%= hostel.name %>
+                                    </strong>
+                                    <br>
+                                    <small style="color: var(--gray-500);">ID: #<%= hostel.id %></small>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <%= hostel.location %>
+                        </td>
+                        <td><strong>GH₵<%= hostel.price.toFixed(2) %></strong></td>
+                        <td>
+                            <%= hostel.rooms %>
+                        </td>
+                        <td>
+                            <span class="badge badge-<%= hostel.status %>">
+                                <%= hostel.status %>
+                            </span>
+                        </td>
+                        <td>
+                            <% if (hostel.featured) { %>
+                                <span style="color: var(--accent-500);">★ Yes</span>
+                                <% } else { %>
+                                    <span style="color: var(--gray-400);">No</span>
+                                    <% } %>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="/hostel/<%= hostel.id %>" class="btn btn-icon btn-ghost btn-sm" title="View">
+                                    <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
+                                </a>
+                                <a href="/admin/hostels/edit/<%= hostel.id %>" class="btn btn-icon btn-ghost btn-sm"
+                                    title="Edit">
+                                    <i data-lucide="pencil" style="width: 16px; height: 16px;"></i>
+                                </a>
+                                <form action="/admin/hostels/toggle-status/<%= hostel.id %>" method="POST"
+                                    style="display: inline;">
+                                    <button type="submit" class="btn btn-icon btn-ghost btn-sm" title="Toggle Status">
+                                        <i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                </form>
+                                <form action="/admin/hostels/delete/<%= hostel.id %>" method="POST"
+                                    style="display: inline;"
+                                    onsubmit="return confirm('Are you sure you want to delete this hostel?')">
+                                    <button type="submit" class="btn btn-icon btn-ghost btn-sm" title="Delete"
+                                        style="color: var(--error);">
+                                        <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+    </div>
+    <% } else { %>
+        <div class="empty-state" style="background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow);">
+            <div class="empty-state-icon">🏨</div>
+            <h3 class="empty-state-title">No Hostels Yet</h3>
+            <p class="empty-state-text">Start adding hostels to your platform.</p>
+            <a href="/admin/hostels/new" class="btn btn-primary">
+                <i data-lucide="plus"></i>
+                Add Your First Hostel
+            </a>
+        </div>
+        <% } %>
